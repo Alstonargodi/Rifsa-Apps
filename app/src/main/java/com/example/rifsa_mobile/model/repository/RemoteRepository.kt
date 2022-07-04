@@ -9,10 +9,7 @@ import com.example.rifsa_mobile.model.entity.remote.login.LoginBody
 import com.example.rifsa_mobile.model.entity.remote.login.LoginResponse
 import com.example.rifsa_mobile.model.entity.remote.signup.RegisterBody
 import com.example.rifsa_mobile.model.entity.remote.signup.RegisterResponse
-import com.example.rifsa_mobile.model.entity.remotefirebase.FieldFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.FinancialFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.InventoryFirebaseEntity
+import com.example.rifsa_mobile.model.entity.remotefirebase.*
 import com.example.rifsa_mobile.model.remote.ApiService
 import com.example.rifsa_mobile.model.remote.FirebaseService
 import com.example.rifsa_mobile.utils.FetchResult
@@ -20,6 +17,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import okhttp3.MultipartBody
 
@@ -80,6 +78,34 @@ class RemoteRepository(
 
     fun insertUpdateFieldData(data : FieldFirebaseEntity, userId: String): Task<Void>{
         return firebaseService.insertUpdateFieldData(data, userId)
+    }
+
+    fun getDiseaseInformation(id : String): DatabaseReference{
+        return firebaseService.getDiseaseInformation(id)
+    }
+
+    fun getDiseaseInformationMisc(id : String,parent : String): DatabaseReference{
+        return firebaseService.getDiseaseInformationMisc(id, parent)
+    }
+
+    fun uploadDiseaseImage(name : String, fileUri : Uri, userId: String): UploadTask{
+        return firebaseService.uploadDiseaseImage(name, fileUri, userId)
+    }
+
+    fun saveDisease(data : DiseaseFirebaseEntity, userId: String): Task<Void>{
+        return firebaseService.saveDisease(data, userId)
+    }
+
+    fun readDiseaseList(userId : String): DatabaseReference{
+        return firebaseService.readDiseaseList(userId)
+    }
+
+    fun deleteDisease(date : String,dataId : String,userId: String): Task<Void> {
+        return firebaseService.deleteDisease(date, dataId, userId)
+    }
+
+    fun deleteDiseaseImage(name : String, userId: String): Task<Void>{
+        return firebaseService.deleteDiseaseImage(name, userId)
     }
 
 

@@ -4,10 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import com.example.rifsa_mobile.model.entity.remotefirebase.FieldFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.FinancialFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.InventoryFirebaseEntity
+import com.example.rifsa_mobile.model.entity.remotefirebase.*
 import com.example.rifsa_mobile.viewmodel.UserPrefrencesViewModel
 import com.example.rifsa_mobile.viewmodel.utils.ViewModelFactory
 import com.google.android.gms.tasks.Task
@@ -134,6 +131,58 @@ class FirebaseService {
     }
 
 
+    fun getDiseaseInformation(id : String): DatabaseReference{
+        return FirebaseDatabase.getInstance()
+            .getReference(diseasePath)
+            .child(id)
+    }
+
+    fun getDiseaseInformationMisc(id : String,parent : String): DatabaseReference{
+        return FirebaseDatabase.getInstance()
+            .getReference(diseasePath)
+            .child(id)
+            .child(parent)
+    }
+
+    fun uploadDiseaseImage(name : String, fileUri : Uri, userId: String): UploadTask{
+        return FirebaseStorage.getInstance().reference
+            .child("$userId/$diseasePath/$name")
+            .putFile(fileUri)
+    }
+
+    fun deleteDiseaseImage(name : String, userId: String): Task<Void>{
+        return FirebaseStorage.getInstance().reference
+            .child("$userId/$diseasePath/$name")
+            .delete()
+    }
+
+    fun saveDisease(data : DiseaseFirebaseEntity,userId: String): Task<Void>{
+        return FirebaseDatabase.getInstance()
+            .getReference(mainPath)
+            .child(userId)
+            .child(diseasePath)
+            .child(data.dateDisease)
+            .child(data.id)
+            .setValue(data)
+    }
+
+    fun readDiseaseList(userId : String): DatabaseReference{
+        return FirebaseDatabase.getInstance()
+            .getReference(mainPath)
+            .child(userId)
+            .child(diseasePath)
+    }
+
+    fun deleteDisease(date : String,dataId : String,userId: String): Task<Void> {
+        return FirebaseDatabase.getInstance()
+            .getReference(mainPath)
+            .child(userId)
+            .child(diseasePath)
+            .child(date)
+            .child(dataId)
+            .removeValue()
+    }
+
 
     companion object{
         const val mainPath = "MainData"
@@ -141,6 +190,7 @@ class FirebaseService {
         const val financePath = "Financial"
         const val inventoryFilePath = "Inventory"
         const val farmingPath = "Fields"
+        const val diseasePath = "Disease"
     }
 
 

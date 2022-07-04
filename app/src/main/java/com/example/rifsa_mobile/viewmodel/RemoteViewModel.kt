@@ -9,9 +9,7 @@ import com.example.rifsa_mobile.model.entity.remote.login.LoginBody
 import com.example.rifsa_mobile.model.entity.remote.login.LoginResponse
 import com.example.rifsa_mobile.model.entity.remote.signup.RegisterBody
 import com.example.rifsa_mobile.model.entity.remote.signup.RegisterResponse
-import com.example.rifsa_mobile.model.entity.remotefirebase.FinancialFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestFirebaseEntity
-import com.example.rifsa_mobile.model.entity.remotefirebase.InventoryFirebaseEntity
+import com.example.rifsa_mobile.model.entity.remotefirebase.*
 import com.example.rifsa_mobile.model.repository.RemoteRepository
 import com.example.rifsa_mobile.utils.FetchResult
 import com.google.android.gms.tasks.Task
@@ -68,8 +66,37 @@ class RemoteViewModel(private val remoteRepository: RemoteRepository): ViewModel
         return remoteRepository.readFarming(userId)
     }
 
+    fun insertUpdateFieldData(data : FieldFirebaseEntity, userId: String): Task<Void>{
+        return remoteRepository.insertUpdateFieldData(data, userId)
+    }
 
+    fun getDiseaseInformation(id : String): DatabaseReference{
+        return remoteRepository.getDiseaseInformation(id)
+    }
 
+    fun getDiseaseInformationMisc(id : String,parent : String): DatabaseReference{
+        return remoteRepository.getDiseaseInformationMisc(id, parent)
+    }
+
+    fun uploadDiseaseImage(name : String, fileUri : Uri, userId: String): UploadTask{
+        return remoteRepository.uploadDiseaseImage(name, fileUri, userId)
+    }
+
+    fun saveDisease(data : DiseaseFirebaseEntity, userId: String): Task<Void>{
+        return remoteRepository.saveDisease(data, userId)
+    }
+
+    fun readDiseaseList(userId : String): DatabaseReference{
+        return remoteRepository.readDiseaseList(userId)
+    }
+
+    fun deleteDisease(date : String,dataId : String,userId: String): Task<Void> {
+        return remoteRepository.deleteDisease(date, dataId, userId)
+    }
+
+    fun deleteDiseaseImage(name : String, userId: String): Task<Void>{
+        return remoteRepository.deleteDiseaseImage(name, userId)
+    }
     
 
     suspend fun postLogin(data : LoginBody): LiveData<FetchResult<LoginResponse>> =

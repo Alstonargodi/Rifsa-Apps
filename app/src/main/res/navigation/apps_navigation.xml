@@ -167,7 +167,7 @@
     </fragment>
     <fragment
         android:id="@+id/disaseDetailFragment"
-        android:name="com.example.rifsa_mobile.view.fragment.disease.detail.DisaseDetailFragment"
+        android:name="com.example.rifsa_mobile.view.fragment.disease.detail.DiseaseDetailFragment"
         android:label="fragment_disase_detail"
         tools:layout="@layout/fragment_disase_detail" >
         <action
@@ -185,7 +185,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="Disease_detail"
-            app:argType="com.example.rifsa_mobile.model.entity.remote.disease.restapivm.DiseaseResultResponse"
+            app:argType="com.example.rifsa_mobile.model.entity.remotefirebase.DiseaseFirebaseEntity"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -220,5 +220,13 @@
         <argument
             android:name="dataField"
             app:argType="com.example.rifsa_mobile.model.entity.remotefirebase.FieldFirebaseEntity" />
+        <argument
+            android:name="currLongitude"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="currLatitude"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
