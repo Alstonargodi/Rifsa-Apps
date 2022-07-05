@@ -2,7 +2,6 @@ package com.example.rifsa_mobile.view.fragment.maps
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +9,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.FragmentMapsBinding
+import com.example.rifsa_mobile.model.entity.remotefirebase.DiseaseFirebaseEntity
 import com.example.rifsa_mobile.model.entity.remotefirebase.FieldFirebaseEntity
-import com.example.rifsa_mobile.utils.FetchResult
-import com.example.rifsa_mobile.view.fragment.disease.DisaseFragment
+import com.example.rifsa_mobile.view.fragment.disease.diseasefragment.DisaseFragment
 import com.example.rifsa_mobile.view.fragment.profile.ProfileFragment
-import com.example.rifsa_mobile.viewmodel.RemoteViewModel
-import com.example.rifsa_mobile.viewmodel.UserPrefrencesViewModel
-import com.example.rifsa_mobile.viewmodel.utils.ViewModelFactory
+import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
+import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
+import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,7 +30,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.launch
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback{
@@ -44,7 +41,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var gMap : GoogleMap
-
+    private var diseaseList = ArrayList<DiseaseFirebaseEntity>()
 
     private var fineLocation = android.Manifest.permission.ACCESS_FINE_LOCATION
 
@@ -70,7 +67,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
         authViewModel.apply {
             when(mapType){
                 DisaseFragment.map_key ->{
-                    getTokenKey().observe(viewLifecycleOwner){getDiseaseData(it)}
+                    getUserId().observe(viewLifecycleOwner){getDiseaseData(it)}
                     binding.tvDiseaseMapsTitle.text = "Peta persebaran penyakit"
                 }
                 ProfileFragment.map_key ->{
@@ -104,26 +101,31 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
         }
 
     }
-    private fun getDiseaseData(token : String){
-        lifecycleScope.launch {
-            remoteViewModel.getDiseaseRemote(token).observe(viewLifecycleOwner){ respon ->
-                when(respon){
-                    is FetchResult.Loading->{}
-                    is FetchResult.Success->{
-                        respon.data.forEach { loc->
-                            showDiseaseMarker(
-                                loc.latitude,
-                                loc.longitude,
-                                loc.indikasi,
-                                loc.idPenyakit.toString()
-                            )
+    private fun getDiseaseData(userId : String){
+        remoteViewModel.readDiseaseList(userId).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { child ->
+                    child.children.forEach { main ->
+                        val data = main.getValue(DiseaseFirebaseEntity::class.java)
+                        if (data != null) {
+                            diseaseList.add(data)
+                            diseaseList.forEach {
+                                showDiseaseMarker(
+                                    it.latitude.toDouble(),
+                                    it.longitude.toDouble(),
+                                    it.nameDisease,
+                                    it.id
+                                )
+                            }
                         }
                     }
-                    is FetchResult.Error->{}
-                    else -> {}
                 }
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+               showStatus(error.message)
+            }
+        })
     }
 
     private fun showDiseaseMarker(lattidue : Double, longtidue : Double, title : String, id : String) {
@@ -135,7 +137,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
                     .title(title)
                 )
                 setOnInfoWindowClickListener {
-                    detailDisease(it.snippet!!.toInt())
+                    detailDisease(it.snippet!!.toString())
                 }
             }
         }
@@ -147,11 +149,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
                 val data = snapshot.getValue(FieldFirebaseEntity::class.java)
                 if (data != null) {
                     showFarmingField(data)
-
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                showStatus(error.message)
             }
         })
     }
@@ -164,6 +165,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
                 .snippet(data.idField)
                 .title("Ladang anda")
             )
+
             setOnInfoWindowClickListener {
                 findNavController().navigate(
                     MapsFragmentDirections.actionMapsDiseaseFragmentToFieldDetailFragment(
@@ -178,29 +180,27 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
     }
 
 
-    private fun detailDisease(id : Int){
-        authViewModel.getUserId().observe(viewLifecycleOwner){ token ->
-            lifecycleScope.launch {
-                remoteViewModel.getDiseaseRemoteById(token,id).observe(viewLifecycleOwner){
-                    when(it){
-                        is FetchResult.Loading->{
-
+    private fun detailDisease(id : String){
+        authViewModel.getUserId().observe(viewLifecycleOwner){userId->
+            remoteViewModel.readDiseaseList(userId).addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach { child ->
+                        val data = child.child(id).getValue(DiseaseFirebaseEntity::class.java)
+                        if (data != null){
+                            findNavController().navigate(
+                                MapsFragmentDirections.actionMapsDiseaseFragmentToDisaseDetailFragment(
+                                    "",
+                                    data
+                                )
+                            )
                         }
-                        is FetchResult.Success->{
-//                            findNavController().navigate(MapsDiseaseFragmentDirections
-//                                .actionMapsDiseaseFragmentToDisaseDetailFragment(
-//                                    null,
-//                                    it.data[0]
-//                                ))
-                        }
-                        is FetchResult.Error->{
-                            Log.d("disease",it.error)
-                        }
-                        else -> {}
                     }
-
                 }
-            }
+
+                override fun onCancelled(error: DatabaseError) {
+                    showStatus(error.message)
+                }
+            })
         }
     }
 

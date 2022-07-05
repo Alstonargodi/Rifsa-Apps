@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.rifsa_mobile.databinding.FragmentProfileBinding
 
-import com.example.rifsa_mobile.view.authetication.login.LoginActivity
-import com.example.rifsa_mobile.viewmodel.RemoteViewModel
-import com.example.rifsa_mobile.viewmodel.UserPrefrencesViewModel
-import com.example.rifsa_mobile.viewmodel.utils.ViewModelFactory
+import com.example.rifsa_mobile.view.activity.authetication.login.LoginActivity
+import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
+import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
+import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 
 
 class ProfileFragment : Fragment() {
@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
                 "",
                 ""
             )
-            startActivity(Intent(requireContext(),LoginActivity::class.java))
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
             activity?.finishAffinity()
         }
 
@@ -64,10 +64,11 @@ class ProfileFragment : Fragment() {
 
 
     private fun showSummaryRemote(){
-        authViewModel.getUserId().observe(viewLifecycleOwner){ token->
+        authViewModel.getUserId().observe(viewLifecycleOwner){ userId ->
 
         }
     }
+
 
     companion object{
         const val map_key = "profile"

@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.FragmentHomeBinding
 import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestFirebaseEntity
-import com.example.rifsa_mobile.utils.FetchResult
 import com.example.rifsa_mobile.view.fragment.harvestresult.adapter.HarvestResultRecyclerViewAdapter
-import com.example.rifsa_mobile.viewmodel.RemoteViewModel
-import com.example.rifsa_mobile.viewmodel.UserPrefrencesViewModel
-import com.example.rifsa_mobile.viewmodel.utils.ViewModelFactory
+import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
+import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
+import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -46,6 +45,7 @@ class HomeFragment : Fragment() {
 
         diseaseCount()
 
+
         return binding.root
     }
 
@@ -72,7 +72,8 @@ class HomeFragment : Fragment() {
     private fun getHarvestRemote(token : String){
         lifecycleScope.launch {
 
-                remoteViewModel.readHarvestResult(token).addValueEventListener(object :
+                remoteViewModel.readHarvestResult(token)
+                    .addValueEventListener(object :
                     ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         snapshot.children.forEach { child ->
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {
-                        Log.d("Home Fragment",error.message)
+                        showStatus(error.message)
                     }
                 })
 
@@ -92,37 +93,28 @@ class HomeFragment : Fragment() {
     }
 
     private fun showHarvestList(data : List<HarvestFirebaseEntity>){
+        binding.barhomeHarvest.visibility = View.GONE
         val adapter = HarvestResultRecyclerViewAdapter(data)
         val recyclerView = binding.rvHomeHarvest
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter.onDetailCallBack(object : HarvestResultRecyclerViewAdapter.OnDetailCallback{
             override fun onDetailCallback(data: HarvestFirebaseEntity) {
-                findNavController().navigate(HomeFragmentDirections
-                    .actionHomeFragmentToHarvestInsertDetailFragment(data))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToHarvestInsertDetailFragment(data))
             }
         })
     }
 
     private fun diseaseCount(){
         authViewModel.getUserId().observe(viewLifecycleOwner){ token->
-            lifecycleScope.launch {
-                remoteViewModel.getDiseaseRemote(token).observe(viewLifecycleOwner){
-                    when(it){
-                        is FetchResult.Success->{
-                            binding.tvhomeDisasecount.text = it.data.size.toString()
-                            binding.cardViewTwo.visibility = View.VISIBLE
-                            binding.cardViewOne.visibility = View.VISIBLE
-                            binding.tvhomeDisasecount.setOnClickListener {
-                                findNavController().navigate(
-                                    HomeFragmentDirections.actionHomeFragmentToDisaseFragment()
-                                )
-                            }
-                        }
-                        else -> {}
-                    }
-                }
-            }
+
         }
+    }
+
+    private fun showStatus(title : String){
+        binding.barhomeHarvest.visibility = View.GONE
+        binding.tvhomeHarvestStatus.visibility = View.VISIBLE
+        binding.tvhomeHarvestStatus.text = title
+        Log.d("HomeFragment", title)
     }
 }

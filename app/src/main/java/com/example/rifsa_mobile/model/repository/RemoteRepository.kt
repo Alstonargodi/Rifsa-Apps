@@ -1,33 +1,21 @@
 package com.example.rifsa_mobile.model.repository
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import com.example.rifsa_mobile.model.entity.remote.disease.DiseasePostResponse
-import com.example.rifsa_mobile.model.entity.remote.disease.restapivm.NewDiseaseResultRespon
-import com.example.rifsa_mobile.model.entity.remote.login.LoginBody
-import com.example.rifsa_mobile.model.entity.remote.login.LoginResponse
-import com.example.rifsa_mobile.model.entity.remote.signup.RegisterBody
-import com.example.rifsa_mobile.model.entity.remote.signup.RegisterResponse
 import com.example.rifsa_mobile.model.entity.remotefirebase.*
-import com.example.rifsa_mobile.model.remote.ApiService
 import com.example.rifsa_mobile.model.remote.FirebaseService
-import com.example.rifsa_mobile.utils.FetchResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import okhttp3.MultipartBody
 
-class RemoteRepository(
-    private val firebaseService: FirebaseService,
-    private val apiService: ApiService,
-) {
+class RemoteRepository(private val firebaseService: FirebaseService) {
 
     fun authLogin(email : String,password : String): Task<AuthResult> =
         firebaseService.authLogin(email, password)
+
+    fun authSignUp(email: String,password: String): Task<AuthResult>{
+        return firebaseService.authSignUp(email, password)
+    }
 
     fun insertUpdateHarvestResult(data : HarvestFirebaseEntity, userId : String): Task<Void> =
         firebaseService.insertUpdateHarvestResult(data,userId)
@@ -108,123 +96,4 @@ class RemoteRepository(
         return firebaseService.deleteDiseaseImage(name, userId)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    suspend fun postLogin(data : LoginBody): LiveData<FetchResult<LoginResponse>> =
-        liveData {
-            emit(FetchResult.Loading)
-                try {
-                    apiService.postLogin(data).apply {
-                        emit(FetchResult.Success(this))
-                    }
-                }catch (e : Exception){
-                    emit(FetchResult.Error(e.message.toString()))
-                }
-    }
-
-    suspend fun postRegister(data : RegisterBody): LiveData<FetchResult<RegisterResponse>> =
-        liveData {
-            emit(FetchResult.Loading)
-            try {
-                apiService.postRegister(data).apply {
-                    emit(FetchResult.Success(this))
-                }
-            }catch (e : Exception){
-                emit(FetchResult.Error(e.message.toString()))
-            }
-    }
-
-
-    suspend fun getDiseaseRemote(token: String): LiveData<FetchResult<NewDiseaseResultRespon>> =
-        liveData {
-            emit(FetchResult.Loading)
-            try {
-                emit(FetchResult.Success(
-                   apiService.getDiseaseRemote(token)
-                ))
-            }catch (e : Exception){
-                emit(FetchResult.Error(e.message.toString()))
-            }
-        }
-
-    suspend fun getDiseaseRemoteById(token: String,id : Int): LiveData<FetchResult<NewDiseaseResultRespon>> =
-        liveData {
-            emit(FetchResult.Loading)
-            try {
-                emit(FetchResult.Success(
-                    apiService.getDiseaseRemoteById(id, token)
-                ))
-            }catch (e : Exception){
-                emit(FetchResult.Error(e.message.toString()))
-            }
-        }
-
-    suspend fun postDiseasePredictionRemote(
-        file: MultipartBody.Part,
-        latitude : Double,
-        longitude: Double,
-    ): LiveData<FetchResult<DiseasePostResponse>> =
-        liveData {
-            emit(FetchResult.Loading)
-            try {
-                emit(FetchResult.Success(
-                    apiService.predictionDisease(
-                        file,
-                        latitude,
-                        longitude
-                    )
-                ))
-            }catch (e : Exception){
-                emit(FetchResult.Error(e.message.toString()))
-            }
-        }
-
-
-    suspend fun deleteDiseaseRemote(id : Int,token: String): LiveData<FetchResult<DiseasePostResponse>> =
-        liveData {
-            emit(FetchResult.Loading)
-            try {
-                emit(FetchResult.Success(
-                    apiService.deleteDiseaseRemote(id,token)
-                ))
-            }catch (e : Exception){
-                emit(FetchResult.Error(
-                    e.message.toString()
-                ))
-            }
-        }
 }
