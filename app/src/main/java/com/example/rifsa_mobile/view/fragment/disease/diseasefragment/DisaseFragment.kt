@@ -13,6 +13,7 @@ import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.FragmentDisaseBinding
 import com.example.rifsa_mobile.model.entity.remotefirebase.DiseaseFirebaseEntity
 import com.example.rifsa_mobile.view.fragment.disease.adapter.DiseaseRecyclerViewAdapter
+import com.example.rifsa_mobile.view.fragment.disease.detail.DiseaseDetailFragmentDirections
 import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
 import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
 import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
@@ -60,6 +61,11 @@ class DisaseFragment : Fragment() {
                 )
             )
         }
+        binding.btnSearchDisease.setOnClickListener {
+            findNavController().navigate(
+                DisaseFragmentDirections.actionDisaseFragmentToDiseaseBookFragment()
+            )
+        }
     }
 
     private fun diseaseList(token : String){
@@ -97,7 +103,8 @@ class DisaseFragment : Fragment() {
                     findNavController().navigate(
                         DisaseFragmentDirections.actionDisaseFragmentToDisaseDetailFragment(
                             null,
-                            data
+                            data,
+                            null,
                         )
                     )
                 }
