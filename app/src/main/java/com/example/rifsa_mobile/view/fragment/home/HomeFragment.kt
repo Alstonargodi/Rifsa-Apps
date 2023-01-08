@@ -11,26 +11,30 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.FragmentHomeBinding
+import com.example.rifsa_mobile.model.entity.openweatherapi.WeatherDetailResponse
+import com.example.rifsa_mobile.model.entity.openweatherapi.request.WeatherRequest
+import com.example.rifsa_mobile.model.entity.remotefirebase.DiseaseFirebaseEntity
 import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestFirebaseEntity
+import com.example.rifsa_mobile.model.remote.utils.FetchResult
 import com.example.rifsa_mobile.view.fragment.harvestresult.adapter.HarvestResultRecyclerViewAdapter
-import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
-import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
 import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
-
+import kotlin.collections.ArrayList
+import kotlin.math.round
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
-    private val authViewModel : UserPrefrencesViewModel by viewModels { ViewModelFactory.getInstance(requireContext()) }
-    private val remoteViewModel : RemoteViewModel by viewModels{ ViewModelFactory.getInstance(requireContext()) }
+    private val viewModel : HomeFragmentViewModel by viewModels{ ViewModelFactory.getInstance(requireContext()) }
 
-    private var dataList = ArrayList<HarvestFirebaseEntity>()
+    private var harvestList = ArrayList<HarvestFirebaseEntity>()
+    private var diseaseList = ArrayList<DiseaseFirebaseEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +45,25 @@ class HomeFragment : Fragment() {
         binding.mainHomeLayout.fullScroll(ScrollView.FOCUS_UP)
 
         binding.imageView2.setImageResource(R.drawable.mockprofile)
-
-
         diseaseCount()
 
+        viewModel.apply {
+            getUserName().observe(viewLifecycleOwner){ name ->
+                binding.tvhomeName.text = name
+            }
+            getUserId().observe(viewLifecycleOwner){ token ->
+                getHarvestRemote(token)
+            }
+        }
+
+        viewModel.getUserLocation().observe(viewLifecycleOwner){ location->
+            lifecycleScope.launch {
+                getWeatherData(
+                    location.latitude ?: 0.0,
+                    location.longtitude ?: 0.0
+                )
+            }
+        }
 
         return binding.root
     }
@@ -52,13 +71,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        authViewModel.apply {
-            getUserName().observe(viewLifecycleOwner){ name ->
-                binding.tvhomeName.text = name
-            }
-            getUserId().observe(viewLifecycleOwner){ token ->
-                getHarvestRemote(token)
-            }
+        binding.cardWeather.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToWeatherFragment()
+            )
         }
 
         binding.btnHomeHasil.setOnClickListener {
@@ -69,15 +85,38 @@ class HomeFragment : Fragment() {
     }
 
 
+    private suspend fun getWeatherData(latitude : Double,longitude: Double){
+        viewModel.getWeatherByLocation(WeatherRequest(
+                null,
+                latitude = latitude,
+                longtitude = longitude
+            )).observe(viewLifecycleOwner){ respon ->
+            when(respon){
+                is FetchResult.Loading->{
+                    binding.pgbarWeatherHome.visibility = View.VISIBLE
+                }
+                is FetchResult.Success->{
+                    binding.pgbarWeatherHome.visibility = View.GONE
+                    showWeather(respon.data)
+                }
+                is FetchResult.Error->{
+                    binding.pgbarWeatherHome.visibility = View.GONE
+                    Log.d("homeFragment",respon.error)
+                }
+                else -> {}
+            }
+        }
+    }
+
     private fun getHarvestRemote(token : String){
-        remoteViewModel.readHarvestResult(token).addValueEventListener(object : ValueEventListener {
+        viewModel.readHarvestResult(token).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
                     snapshot.children.forEach { child ->
                         child.children.forEach { main ->
                             val data = main.getValue(HarvestFirebaseEntity::class.java)
-                            data?.let { dataList.add(data) }
-                            showHarvestList(dataList)
+                            data?.let { harvestList.add(data) }
+                            showHarvestList(harvestList)
                         }
                     }
                 }else{
@@ -107,9 +146,45 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun diseaseCount(){
-        authViewModel.getUserId().observe(viewLifecycleOwner){ token->
+    private fun showWeather(data : WeatherDetailResponse){
+        val temp = round(data.main.temp).toInt()
+        val url = data.weather[0].icon
 
+        val icon = "http://openweathermap.org/img/w/${url}.png"
+        binding.tvCityName.text = data.name
+        binding.tvWeatherhomeDesc.text = data.weather[0].description
+        binding.tvWeatherhomeTemp.text = "$temp c"
+        Glide.with(requireContext())
+            .asBitmap()
+            .load(icon)
+            .into(binding.imgWeatherhomeIcon)
+    }
+    private fun diseaseCount(){
+        viewModel.getUserId().observe(viewLifecycleOwner){ userId ->
+            viewModel.readDiseaseResult(userId).addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        snapshot.children.forEach { child->
+                            child.children.forEach{ main ->
+                                val data = main.getValue(DiseaseFirebaseEntity::class.java)
+                                data?.let { diseaseList.add(it) }
+                                showDiseaseTotal(diseaseList.size)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("homeFragment",error.message.toString())
+                }
+            })
+        }
+    }
+
+    private fun showDiseaseTotal(total : Int){
+        if(total != 0){
+            binding.cardViewTwo.visibility = View.VISIBLE
+            binding.tvhomeDisasecount.text = total.toString()
         }
     }
 

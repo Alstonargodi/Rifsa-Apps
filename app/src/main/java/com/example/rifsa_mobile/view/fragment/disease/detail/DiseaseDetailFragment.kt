@@ -38,7 +38,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
-
 @Suppress("DEPRECATION")
 class DiseaseDetailFragment : Fragment() {
     private lateinit var binding : FragmentDisaseDetailBinding
@@ -110,12 +109,22 @@ class DiseaseDetailFragment : Fragment() {
     ): View {
         binding = FragmentDisaseDetailBinding.inflate(layoutInflater)
         classification = DiseasePrediction(requireContext())
-        fusedLocation = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocation = LocationServices.getFusedLocationProviderClient(
+            requireContext()
+        )
 
         try {
-            val detail = DiseaseDetailFragmentArgs.fromBundle(requireArguments()).diseaseData
-            val isDiseaseBook = DiseaseDetailFragmentArgs.fromBundle(requireArguments()).diseaseDetail
-            val imageUrl = DiseaseDetailFragmentArgs.fromBundle(requireArguments()).photoDisase
+            val detail = DiseaseDetailFragmentArgs.fromBundle(
+                requireArguments()
+            ).diseaseData
+
+            val isDiseaseBook = DiseaseDetailFragmentArgs.fromBundle(
+                requireArguments()
+            ).diseaseDetail
+
+            val imageUrl = DiseaseDetailFragmentArgs.fromBundle(
+                requireArguments()
+            ).photoDisase
 
             if (detail != null){
                 showDetailDisease(detail)
@@ -149,7 +158,8 @@ class DiseaseDetailFragment : Fragment() {
 
         binding.btnDiseaseBackhome.setOnClickListener {
             findNavController().navigate(
-                DiseaseDetailFragmentDirections.actionDisaseDetailFragmentToDisaseFragment()
+                DiseaseDetailFragmentDirections
+                    .actionDisaseDetailFragmentToDisaseFragment()
             )
         }
 
@@ -180,8 +190,13 @@ class DiseaseDetailFragment : Fragment() {
 
 
     private fun showImageCapture(){
-        imageUri = DiseaseDetailFragmentArgs.fromBundle(requireArguments()).photoDisase?.toUri()!!
-        val bitmapImage = MediaStore.Images.Media.getBitmap(requireContext().contentResolver,imageUri)
+        imageUri = DiseaseDetailFragmentArgs.fromBundle(
+            requireArguments()
+        ).photoDisase?.toUri()!!
+
+        val bitmapImage = MediaStore.Images.Media.getBitmap(
+            requireContext().contentResolver,imageUri
+        )
         imageBitmap = bitmapImage
         binding.imgDisaseDetail.setImageBitmap(bitmapImage)
     }
@@ -319,7 +334,8 @@ class DiseaseDetailFragment : Fragment() {
             .addOnSuccessListener {
                 showStatus("penyakit tersimpan")
                 findNavController().navigate(
-                    DiseaseDetailFragmentDirections.actionDisaseDetailFragmentToDisaseFragment()
+                    DiseaseDetailFragmentDirections
+                        .actionDisaseDetailFragmentToDisaseFragment()
                 )
             }
             .addOnFailureListener {
@@ -344,7 +360,8 @@ class DiseaseDetailFragment : Fragment() {
             remoteViewModel.deleteDisease(currentDate,diseaseId,userId)
                 .addOnSuccessListener {
                     findNavController().navigate(
-                        DiseaseDetailFragmentDirections.actionDisaseDetailFragmentToDisaseFragment()
+                        DiseaseDetailFragmentDirections
+                            .actionDisaseDetailFragmentToDisaseFragment()
                     )
                 }
                 .addOnFailureListener {

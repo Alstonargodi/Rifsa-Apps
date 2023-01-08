@@ -2,14 +2,11 @@ package com.example.rifsa_mobile.model.local.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.rifsa_mobile.model.entity.openweatherapi.request.WeatherRequest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
-
 
 val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name = "userPrefrences")
 
@@ -20,6 +17,10 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
     private val tokenKey = stringPreferencesKey("token_key")
     private val userIdKey = stringPreferencesKey("userId_key")
 
+    private val locationCity = stringPreferencesKey("locationCity_key")
+    private val locationLatitude = doublePreferencesKey("locationLat_key")
+    private val locationLongitude = doublePreferencesKey("locationLong_key")
+    private val isGetLocation = booleanPreferencesKey("isGetLocation_key")
 
     fun getOnBoardKey(): Flow<Boolean>{
         return dataStore.data.map {
@@ -45,7 +46,35 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
         }
     }
 
+    fun getUserLocation(): Flow<WeatherRequest> {
+        return dataStore.data.map {
+            WeatherRequest(
+                it[locationCity],
+                it[locationLatitude] ?: 0.0,
+                it[locationLongitude] ?: 0.0
+            )
+        }
+    }
 
+    fun getLocationListener(): Flow<Boolean>{
+        return dataStore.data.map {
+            it[isGetLocation] ?: false
+        }
+    }
+
+    suspend fun saveLocation(cityName : String,latitude : Double,longitude: Double){
+        dataStore.edit {
+            it[locationCity] = cityName
+            it[locationLatitude] = latitude
+            it[locationLongitude] = longitude
+        }
+    }
+
+    suspend fun setGetLocation(getlocation : Boolean){
+        dataStore.edit {
+            it[isGetLocation] = getlocation
+        }
+    }
 
 
     suspend fun savePreferences(onBoard : Boolean, name : String, tokenId:String, userId : String){
