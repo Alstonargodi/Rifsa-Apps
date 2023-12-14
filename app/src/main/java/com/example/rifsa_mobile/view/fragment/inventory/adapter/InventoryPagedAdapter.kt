@@ -3,6 +3,7 @@ package com.example.rifsa_mobile.view.fragment.inventory.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.example.rifsa_mobile.databinding.ItemcardInventoryBinding
 import com.example.rifsa_mobile.model.entity.remotefirebase.InventoryEntity
 
 class InventoryPagedAdapter:
-    PagingDataAdapter<InventoryEntity,InventoryPagedAdapter.ViewHolder>(
+    PagedListAdapter<InventoryEntity,InventoryPagedAdapter.ViewHolder>(
         InventoryComprator()
     )
 {
@@ -28,7 +29,6 @@ class InventoryPagedAdapter:
         val binding : ItemcardInventoryBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item : InventoryEntity){
-            Log.d("tes Inventory",item.name)
             binding.tvcardInventTitle.text = item.name
             binding.tvcardInventAmount.text = item.amount
 

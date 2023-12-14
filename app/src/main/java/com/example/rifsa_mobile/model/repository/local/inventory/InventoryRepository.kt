@@ -14,7 +14,7 @@ import com.example.rifsa_mobile.model.local.room.dbconfig.DatabaseConfig
 import com.example.rifsa_mobile.model.repository.utils.RepoUtils
 
 class InventoryRepository(
-    private val database : DatabaseConfig
+    database : DatabaseConfig
 ) {
     private val dao = database.inventoryDao()
     private val pagingConfig = PagedList.Config.Builder()
@@ -24,55 +24,20 @@ class InventoryRepository(
         .build()
 
     //read sort data
-    fun readInventorySortNameAsc(): LiveData<PagingData<InventoryEntity>> {
-        return liveData {
-            Pager(
-                config = PagingConfig(
-                    pageSize = 5,
-                    enablePlaceholders = true,
-                    initialLoadSize = 10
-                ),
-            ) {
-                PagingSource(dao)
-            }
-        }
+    fun readInventorySortNameAsc(): LiveData<PagedList<InventoryEntity>> {
+        return LivePagedListBuilder(dao.readInventorySortNameAsc(), pagingConfig).build()
     }
 
-
-    fun readInventorySortNameDesc(): LiveData<PagingData<InventoryEntity>> {
-        return liveData {
-            Pager(
-                config = PagingConfig(
-                    pageSize = 5
-                ),
-            ) {
-                PagingSource(dao)
-            }
-        }
+    fun readInventorySortNameDesc(): LiveData<PagedList<InventoryEntity>> {
+        return LivePagedListBuilder(dao.readInventoryNameDesc(), pagingConfig).build()
     }
 
-    fun readInventorySortDateAsc(): LiveData<PagingData<InventoryEntity>> {
-        return liveData {
-            Pager(
-                config = PagingConfig(
-                    pageSize = 5
-                ),
-            ) {
-                PagingSource(dao)
-            }
-        }
+    fun readInventorySortDateAsc(): LiveData<PagedList<InventoryEntity>> {
+        return LivePagedListBuilder(dao.readInventoryDateAsc(), pagingConfig).build()
     }
 
-    fun readInventorySortDateDesc(): LiveData<PagingData<InventoryEntity>> {
-        return liveData {
-            Pager(
-                config = PagingConfig(
-                    pageSize = 5
-                ),
-            ) {
-                PagingSource(dao)
-            }
-        }
+    fun readInventorySortDateDesc(): LiveData<PagedList<InventoryEntity>> {
+        return LivePagedListBuilder(dao.readInventoryDateDesc(), pagingConfig).build()
     }
 
     fun insertInventory(data : InventoryEntity){

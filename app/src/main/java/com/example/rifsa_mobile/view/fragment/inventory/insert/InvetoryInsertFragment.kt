@@ -26,7 +26,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.LocalDate
 import java.util.*
 
-
 class InvetoryInsertFragment : Fragment() {
     private lateinit var binding : FragmentInvetoryInsertDetailBinding
 
@@ -49,7 +48,6 @@ class InvetoryInsertFragment : Fragment() {
     //date
     @RequiresApi(Build.VERSION_CODES.O)
     private var date = LocalDate.now().toString()
-    private var currentDate = LocalDate.now().toString()
     private var currentDay = LocalDate.now().dayOfMonth
     private var currentMonth = LocalDate.now().month.value
     private var currentYear = LocalDate.now().year

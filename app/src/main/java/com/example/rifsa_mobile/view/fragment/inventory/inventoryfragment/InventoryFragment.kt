@@ -28,17 +28,10 @@ import kotlinx.coroutines.launch
 class InventoryFragment : Fragment() {
     private lateinit var binding : FragmentInventoryBinding
 
-    private val remoteViewModel : RemoteViewModel by viewModels{
-        ViewModelFactory.getInstance(requireContext())
-    }
-    private val authViewModel : UserPrefrencesViewModel by viewModels {
-        ViewModelFactory.getInstance(requireContext())
-    }
     private val inventoryViewModel : InventoryViewModel by viewModels{
         ViewModelFactory.getInstance(requireContext())
     }
 
-    private var dataList = ArrayList<InventoryEntity>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +43,10 @@ class InventoryFragment : Fragment() {
 
         binding.fabInventoryAdd.setOnClickListener {
             findNavController().navigate(
-                InventoryFragmentDirections.actionInventoryFragmentToInvetoryInsertFragment(null,false)
+                InventoryFragmentDirections.actionInventoryFragmentToInvetoryInsertFragment(
+                    null,
+                    false
+                )
             )
         }
 
@@ -124,18 +120,17 @@ class InventoryFragment : Fragment() {
                        }
                    }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {  }
             }
         }
     }
 
-    private suspend fun showInventoryList(data : PagingData<InventoryEntity>) {
+    private fun showInventoryList(data : PagedList<InventoryEntity>) {
         try {
             binding.pgbInventoryBar.visibility = View.GONE
             val adapter = InventoryPagedAdapter()
             val recyclerView = binding.recviewInventory
-            adapter.submitData(data)
+            adapter.submitList(data)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -154,20 +149,5 @@ class InventoryFragment : Fragment() {
         }
     }
 
-    private fun showStatus(title : String){
-        binding.pgbInventoryStatus.text = title
-        binding.pgbInventoryStatus.visibility = View.VISIBLE
-        if (title.isNotEmpty()){
-            binding.pgbInventoryBar.visibility = View.GONE
-        }
-        Log.d("InventoryFragment",title)
-    }
-
-    private fun dataChecker(total : Int){
-        if (total == 0){
-            binding.pgbInventoryBar.visibility = View.GONE
-            binding.inventoryEmptyState.emptyState.visibility = View.VISIBLE
-        }
-    }
 
 }

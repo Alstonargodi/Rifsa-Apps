@@ -66,9 +66,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
             requireContext()
         )
         setHasOptionsMenu(true)
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-
+        binding.tvDiseaseMapsTitle.setTextColor(Color.BLACK)
+        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back)
         val mapType = MapsFragmentArgs.fromBundle(requireArguments()).maptype
 
         this.viewModel.apply {

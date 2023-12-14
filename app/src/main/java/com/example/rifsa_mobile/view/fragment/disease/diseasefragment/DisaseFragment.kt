@@ -36,7 +36,6 @@ class DisaseFragment : Fragment() {
         val bottomMenu = requireActivity().findViewById<BottomNavigationView>(R.id.main_bottommenu)
         bottomMenu.visibility = View.VISIBLE
 
-
         return binding.root
     }
 

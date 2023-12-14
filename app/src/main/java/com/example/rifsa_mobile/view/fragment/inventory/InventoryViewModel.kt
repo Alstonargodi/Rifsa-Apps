@@ -14,16 +14,16 @@ class InventoryViewModel(
     private val remoteRepository : FirebaseRepository
 ): ViewModel() {
 
-    fun readInventorySortNameDesc(): LiveData<PagingData<InventoryEntity>> =
-       inventoryRepository.readInventorySortNameDesc()
-
-    fun readInventorySortNameAsc(): LiveData<PagingData<InventoryEntity>> =
+    fun readInventorySortNameAsc(): LiveData<PagedList<InventoryEntity>> =
         inventoryRepository.readInventorySortNameAsc()
 
-    fun readInventorySortDateAsc(): LiveData<PagingData<InventoryEntity>> =
+    fun readInventorySortNameDesc(): LiveData<PagedList<InventoryEntity>> =
+       inventoryRepository.readInventorySortNameDesc()
+
+    fun readInventorySortDateAsc(): LiveData<PagedList<InventoryEntity>> =
         inventoryRepository.readInventorySortDateAsc()
 
-    fun readInventorySortDateDesc(): LiveData<PagingData<InventoryEntity>> =
+    fun readInventorySortDateDesc(): LiveData<PagedList<InventoryEntity>> =
         inventoryRepository.readInventorySortDateDesc()
 
     fun insertInventory(data : InventoryEntity){
