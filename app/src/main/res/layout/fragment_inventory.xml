@@ -38,7 +38,6 @@
                 android:gravity="center|start"
                 android:includeFontPadding="false"
                 android:text="@string/fragment_inventory_title"
-                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

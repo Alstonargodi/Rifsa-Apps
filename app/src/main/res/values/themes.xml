@@ -4,7 +4,7 @@
     </declare-styleable>
 
     <!-- Base application theme. -->
-    <style name="Theme.RifsaMobile" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.RifsaMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -35,6 +35,6 @@
     </style>
     <style name="iconNav" parent="Theme.RifsaMobile">
         <item name="ic_maps">@drawable/ic_maps</item>
-        <item name="android:iconTint">@color/green</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

@@ -46,6 +46,7 @@ class InventoryPagedAdapter:
         holder.binding.tvcardInventTitle.setOnClickListener {
             itemCallBack.onItemCallback(item)
         }
+        Log.d("InventoryFragment_Read",position.toString())
         holder.bind(item)
     }
 
@@ -53,10 +54,7 @@ class InventoryPagedAdapter:
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-       return ViewHolder(ItemcardInventoryBinding.inflate(
-           LayoutInflater.from(parent.context)
-       )
-       )
+       return ViewHolder(ItemcardInventoryBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     class InventoryComprator : DiffUtil.ItemCallback<InventoryEntity>() {

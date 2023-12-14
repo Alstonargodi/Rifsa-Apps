@@ -17,7 +17,9 @@ import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
-    private val authViewModel : UserPrefrencesViewModel by viewModels { ViewModelFactory.getInstance(this) }
+    private val authViewModel : UserPrefrencesViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,5 @@ class SplashScreen : AppCompatActivity() {
                 finishAffinity()
             }
         }
-
-
     }
 }
