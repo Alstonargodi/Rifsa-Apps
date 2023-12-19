@@ -47,12 +47,11 @@
 
             <ImageView
                 android:id="@+id/btn_maps_disease"
-                style="@style/iconNav"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/fragment_maps_desc"
-                android:src="@drawable/baseline_map_24"
+                android:src="@drawable/ic_maps"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_search_disease"
                 app:layout_constraintTop_toTopOf="parent"

@@ -1,6 +1,8 @@
 package com.example.rifsa_mobile.view.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,11 +24,20 @@ class MainActivity : AppCompatActivity() {
         //todo dark mode
         window.statusBarColor = ContextCompat.getColor(this,R.color.black)
 
-//        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         binding.mainBottommenu.visibility = View.VISIBLE
         val navControl = findNavController(R.id.mainnav_framgent)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        val themeMode = resources.configuration
+        val currentTheme = themeMode.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        when(currentTheme){
+            Configuration.UI_MODE_NIGHT_NO ->{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            Configuration.UI_MODE_NIGHT_YES ->{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
         binding.mainBottommenu.apply {
             setupWithNavController(navControl)
         }
