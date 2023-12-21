@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     style="@style/Theme.RifsaMobile"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity">
+    tools:context=".view.activity.mainactivity.MainActivity">
 
     <fragment
         android:id="@+id/mainnav_framgent"

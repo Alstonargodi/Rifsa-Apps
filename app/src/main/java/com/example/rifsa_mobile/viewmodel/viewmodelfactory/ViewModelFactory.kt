@@ -12,6 +12,7 @@ import com.example.rifsa_mobile.model.repository.local.preference.PreferenceResp
 import com.example.rifsa_mobile.model.repository.remote.FirebaseRepository
 import com.example.rifsa_mobile.model.repository.remote.WeatherRepository
 import com.example.rifsa_mobile.view.activity.authetication.login.LoginViewModel
+import com.example.rifsa_mobile.view.activity.mainactivity.MainActivityViewModel
 import com.example.rifsa_mobile.view.fragment.disease.viewmodel.DiseaseDetailViewModel
 import com.example.rifsa_mobile.view.fragment.disease.viewmodel.DiseaseViewModel
 import com.example.rifsa_mobile.view.fragment.finance.FinanceViewModel
@@ -35,7 +36,7 @@ class ViewModelFactory private constructor(
     private val weatherRepository: WeatherRepository,
     private val harvestRepository: HarvestRepository,
     private val FinancialRepository : FinancialRepository,
-    private val inventoryRepository: InventoryRepository
+    private val inventoryRepository: InventoryRepository,
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -127,6 +128,9 @@ class ViewModelFactory private constructor(
                     inventoryRepository,
                     firebaseRepository
                 ) as T
+            }
+            modelClass.isAssignableFrom(MainActivityViewModel::class.java)->{
+                MainActivityViewModel(PreferenceRespository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

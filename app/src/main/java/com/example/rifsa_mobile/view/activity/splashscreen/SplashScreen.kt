@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.rifsa_mobile.R
-import com.example.rifsa_mobile.view.activity.MainActivity
+import com.example.rifsa_mobile.view.activity.mainactivity.MainActivity
 import com.example.rifsa_mobile.view.activity.authetication.login.LoginActivity
 import com.example.rifsa_mobile.view.activity.onboarding.onboarding.OnBoarding
 import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel

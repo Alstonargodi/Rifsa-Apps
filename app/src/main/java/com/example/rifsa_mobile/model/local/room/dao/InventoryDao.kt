@@ -30,6 +30,5 @@ interface InventoryDao {
 
     @Query("select * from InventoryTable order by day desc ")
     fun readInventoryDateDesc(): DataSource.Factory<Int,InventoryEntity>
-
-
+    
 }

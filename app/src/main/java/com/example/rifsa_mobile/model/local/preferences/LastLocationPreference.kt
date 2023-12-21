@@ -49,6 +49,5 @@ class LastLocationPreference(private val dataStore : DataStore<Preferences>) {
                 instance
             }
         }
-
     }
 }

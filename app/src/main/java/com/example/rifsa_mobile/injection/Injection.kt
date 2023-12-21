@@ -2,10 +2,13 @@ package com.example.rifsa_mobile.injection
 
 import android.content.Context
 import com.example.rifsa_mobile.model.entity.preferences.LastLocationPref
+import com.example.rifsa_mobile.model.entity.preferences.ThemeModePreference
 import com.example.rifsa_mobile.model.local.preferences.AuthenticationPreference
 import com.example.rifsa_mobile.model.local.preferences.LastLocationPreference
+import com.example.rifsa_mobile.model.local.preferences.ThemeModePreferences
 import com.example.rifsa_mobile.model.local.preferences.dataStore
 import com.example.rifsa_mobile.model.local.preferences.dataStoreLocation
+import com.example.rifsa_mobile.model.local.preferences.dataStoreTheme
 import com.example.rifsa_mobile.model.local.room.dbconfig.DatabaseConfig
 import com.example.rifsa_mobile.model.remote.firebase.FirebaseService
 import com.example.rifsa_mobile.model.remote.weatherapi.WeatherApiConfig
@@ -29,8 +32,12 @@ object Injection {
 
     fun provideLocalRepository(context: Context): PreferenceRespository {
         return PreferenceRespository(
-            AuthenticationPreference.getInstance(context.dataStore),
-            LastLocationPreference.getInstance(context.dataStoreLocation)
+            preferences = AuthenticationPreference
+                .getInstance(context.dataStore),
+            lastLocationPreferences = LastLocationPreference
+                .getInstance(context.dataStoreLocation),
+            themeModePreference = ThemeModePreferences
+                .getInstance(context.dataStoreTheme)
         )
     }
 

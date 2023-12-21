@@ -62,6 +62,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMapsBinding.inflate(layoutInflater)
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
             requireContext()
         )
@@ -70,7 +71,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
         binding.tvDiseaseMapsTitle.setTextColor(Color.BLACK)
-        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back)
         val mapType = MapsFragmentArgs.fromBundle(requireArguments()).maptype
 
         this.viewModel.apply {
@@ -117,31 +117,26 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
                     0->{
                         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                         binding.tvDiseaseMapsTitle.setTextColor(Color.BLACK)
-                        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back)
                         true
                     }
                     1->{
                         googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
                         binding.tvDiseaseMapsTitle.setTextColor(Color.WHITE)
-                        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back_white)
                         true
                     }
                     2->{
                         googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
                         binding.tvDiseaseMapsTitle.setTextColor(Color.BLACK)
-                        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back)
                         true
                     }
                     3->{
                         googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
                         binding.tvDiseaseMapsTitle.setTextColor(Color.WHITE)
-                        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back_white)
                         true
                     }
                     else->{
                         googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                         binding.tvDiseaseMapsTitle.setTextColor(Color.BLACK)
-                        binding.btnDiseaseMapsBackhome.setBackgroundResource(R.drawable.ic_back)
                         true
                     }
                 }
@@ -153,6 +148,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback{
 
     override fun onMapReady(maps: GoogleMap) {
         googleMap = maps
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+
         getCurrentLocation()
 
         //check location

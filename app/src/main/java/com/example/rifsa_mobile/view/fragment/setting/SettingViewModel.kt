@@ -40,8 +40,14 @@ class SettingViewModel(
         preferences.saveLocationListener(location)
     }
 
-    suspend fun updateDiseaseUpload(imageUri : Uri,idDisease : String){
+    fun updateDiseaseUpload(imageUri : Uri,idDisease : String){
         localRepository.updateDiseaseUpload(imageUri, idDisease)
     }
 
+    fun getUserThemeMode(): LiveData<Boolean> =
+        preferences.getThemeMode()
+
+    suspend fun saveUserThemeMode(themeMode : Boolean){
+        preferences.saveThemeMode(themeMode)
+    }
 }

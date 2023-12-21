@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.rifsa_mobile.model.entity.openweatherapi.request.UserLocation
+import com.example.rifsa_mobile.model.entity.preferences.ThemeModePreference
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
 
@@ -21,6 +22,8 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
     private val locationLatitude = doublePreferencesKey("locationLat_key")
     private val locationLongitude = doublePreferencesKey("locationLong_key")
     private val isGetLocation = booleanPreferencesKey("isGetLocation_key")
+
+    private val isDarkMode = booleanPreferencesKey("themeMode_key")
 
     fun getOnBoardKey(): Flow<Boolean>{
         return dataStore.data.map {
@@ -62,7 +65,11 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
         }
     }
 
-    suspend fun saveLocation(cityName : String,latitude : Double,longitude: Double){
+    suspend fun saveLocation(
+        cityName : String,
+        latitude : Double,
+        longitude: Double
+    ){
         dataStore.edit {
             it[locationCity] = cityName
             it[locationLatitude] = latitude
@@ -76,8 +83,12 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
         }
     }
 
-
-    suspend fun savePreferences(onBoard : Boolean, name : String, tokenId:String, userId : String){
+    suspend fun savePreferences(
+        onBoard : Boolean,
+        name : String,
+        tokenId:String,
+        userId : String
+    ){
         dataStore.edit {
             it[onBoardKey] = onBoard
             it[nameKey] = name
@@ -86,7 +97,21 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
         }
     }
 
+    fun getUserThemeMode(): Flow<ThemeModePreference> {
+        return dataStore.data.map {
+            ThemeModePreference(
+                it[isDarkMode] ?: false,
+            )
+        }
+    }
 
+    suspend fun saveUserThemeMode(
+        themeMode : Boolean
+    ){
+        dataStore.edit {
+            it[isDarkMode] = themeMode
+        }
+    }
 
 
     companion object{
@@ -100,7 +125,6 @@ class AuthenticationPreference(private val dataStore : DataStore<Preferences>) {
                 instance
             }
         }
-
     }
 
 }

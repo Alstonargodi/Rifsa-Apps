@@ -97,7 +97,6 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
-                app:drawableTint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView52"

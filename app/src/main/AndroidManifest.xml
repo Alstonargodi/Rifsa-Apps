@@ -43,7 +43,7 @@
             android:name=".view.activity.onboarding.onboarding.OnBoarding"
             android:exported="false" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.mainactivity.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.ActivitySignUpBinding
-import com.example.rifsa_mobile.view.activity.MainActivity
+import com.example.rifsa_mobile.view.activity.mainactivity.MainActivity
 import com.example.rifsa_mobile.viewmodel.remoteviewmodel.RemoteViewModel
 import com.example.rifsa_mobile.viewmodel.userpreferences.UserPrefrencesViewModel
 import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory

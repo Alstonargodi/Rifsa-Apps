@@ -1,9 +1,10 @@
-package com.example.rifsa_mobile.view.activity
+package com.example.rifsa_mobile.view.activity.mainactivity
 
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -11,11 +12,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.ActivityMainBinding
+import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
-
+    private val viewModel: MainActivityViewModel by viewModels{
+        ViewModelFactory.getInstance(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,16 +32,23 @@ class MainActivity : AppCompatActivity() {
         val navControl = findNavController(R.id.mainnav_framgent)
 
         val themeMode = resources.configuration
-        val currentTheme = themeMode.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
-        when(currentTheme){
-            Configuration.UI_MODE_NIGHT_NO ->{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-            Configuration.UI_MODE_NIGHT_YES ->{
+        viewModel.getUserThemeMode().observe(this){userDarkMode ->
+            if(userDarkMode){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }else{
+                when(themeMode.uiMode and Configuration.UI_MODE_NIGHT_MASK){
+                    Configuration.UI_MODE_NIGHT_NO ->{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                    Configuration.UI_MODE_NIGHT_YES ->{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                }
             }
         }
+
+
         binding.mainBottommenu.apply {
             setupWithNavController(navControl)
         }

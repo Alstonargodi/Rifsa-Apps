@@ -13,7 +13,7 @@ import com.example.rifsa_mobile.databinding.ActivityLoginBinding
 import com.example.rifsa_mobile.model.entity.remotefirebase.DiseaseEntity
 import com.example.rifsa_mobile.model.entity.remotefirebase.FinancialEntity
 import com.example.rifsa_mobile.model.entity.remotefirebase.HarvestEntity
-import com.example.rifsa_mobile.view.activity.MainActivity
+import com.example.rifsa_mobile.view.activity.mainactivity.MainActivity
 import com.example.rifsa_mobile.view.activity.authetication.signup.SignUpActivity
 import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 import com.google.firebase.database.DataSnapshot

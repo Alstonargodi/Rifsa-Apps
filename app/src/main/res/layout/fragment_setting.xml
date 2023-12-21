@@ -7,6 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.setting.SettingFragment">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_theme"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView55"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView55"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView55"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Theme mode"
+        app:fontFamily="@font/dmsans_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_language" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar15"
         android:layout_width="match_parent"
@@ -33,7 +54,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:includeFontPadding="false"
                 android:text="@string/pengaturan"
-                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_setting_backhome"
@@ -48,8 +68,7 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -88,7 +107,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="@string/nama_kota"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:fontFamily="@font/dmsans_bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +148,6 @@
         android:fontFamily="@font/dmsans_bold"
         android:includeFontPadding="false"
         android:text="@string/ramalan_cuaca"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -147,7 +164,6 @@
         android:fontFamily="@font/dmsans_bold"
         android:includeFontPadding="false"
         android:text="@string/data"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -164,7 +180,6 @@
         android:fontFamily="@font/dmsans_bold"
         android:includeFontPadding="false"
         android:text="@string/bahasa"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

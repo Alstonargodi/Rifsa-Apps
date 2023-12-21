@@ -130,6 +130,7 @@
 
         <TextView
             android:id="@+id/tvfinance_insert_date"
+            style="@style/tvTitle"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="32dp"
@@ -137,21 +138,18 @@
             android:layout_marginEnd="32dp"
             android:autofillHints="name"
             android:background="@drawable/bg_tvcorner_stroke_gray"
+            android:drawablePadding="16dp"
             android:fontFamily="@font/dmsans_regular"
+            android:gravity="center|start"
             android:includeFontPadding="false"
             android:inputType="textPersonName"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            style="@style/tvTitle"
-            android:gravity="center|start"
-            android:drawablePadding="16dp"
             app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView20"
-            tools:ignore="LabelFor,TextViewEdits"
-            app:drawableTint="@color/black"
-            />
+            tools:ignore="LabelFor,TextViewEdits" />
 
         <Spinner
             android:id="@+id/spinnerfinance_insert"

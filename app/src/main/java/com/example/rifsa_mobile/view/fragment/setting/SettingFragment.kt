@@ -61,13 +61,19 @@ class SettingFragment : Fragment() {
         fusedLocation = LocationServices.getFusedLocationProviderClient(
             requireContext()
         )
-        viewModel.getLocationListener().observe(viewLifecycleOwner){ state->
-            isTracking = state
-            binding.switchLocation.isChecked = state
+        viewModel.apply {
+            getLocationListener().observe(viewLifecycleOwner){ state->
+                isTracking = state
+                binding.switchLocation.isChecked = state
+            }
+            getFirebaseUserId().observe(viewLifecycleOwner){ id->
+                userFirebaseId = id
+            }
+            getUserThemeMode().observe(viewLifecycleOwner){ theme->
+                binding.switchTheme.isChecked = theme
+            }
         }
-        viewModel.getFirebaseUserId().observe(viewLifecycleOwner){ id->
-            userFirebaseId = id
-        }
+
         return binding.root
     }
 
@@ -100,6 +106,15 @@ class SettingFragment : Fragment() {
             Locale.getDefault().language.also {
                 btnLanguage.text = it
             }
+            switchTheme.apply {
+                setOnCheckedChangeListener { _, check ->
+                    if(check){
+                        setUserTheme(true)
+                    }else{
+                        setUserTheme(false)
+                    }
+                }
+            }
         }
     }
 
@@ -116,6 +131,12 @@ class SettingFragment : Fragment() {
             requireContext(),
             uploadedReminderId
         )
+    }
+
+    private fun setUserTheme(isDarkMode : Boolean){
+        lifecycleScope.launch {
+            viewModel.saveUserThemeMode(isDarkMode)
+        }
     }
 
     /*
@@ -136,6 +157,7 @@ class SettingFragment : Fragment() {
                 }
             }
     }
+
     private fun uploadDiseaseImage(data : DiseaseEntity){
         viewModel.insertDiseaseImage(
             name = data.diseaseId,
