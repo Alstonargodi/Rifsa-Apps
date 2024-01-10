@@ -4,7 +4,7 @@
     </declare-styleable>
 
     <!-- Base application theme. -->
-    <style name="Theme.RifsaMobile" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.RifsaMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/white</item>

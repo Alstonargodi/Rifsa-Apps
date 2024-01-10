@@ -14,7 +14,6 @@ import com.example.rifsa_mobile.R
 import com.example.rifsa_mobile.databinding.ActivityMainBinding
 import com.example.rifsa_mobile.viewmodel.viewmodelfactory.ViewModelFactory
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModels{
@@ -28,27 +27,18 @@ class MainActivity : AppCompatActivity() {
         //todo dark mode
         window.statusBarColor = ContextCompat.getColor(this,R.color.black)
 
+
         binding.mainBottommenu.visibility = View.VISIBLE
         val navControl = findNavController(R.id.mainnav_framgent)
 
         val themeMode = resources.configuration
-
         viewModel.getUserThemeMode().observe(this){userDarkMode ->
             if(userDarkMode){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }else{
-                when(themeMode.uiMode and Configuration.UI_MODE_NIGHT_MASK){
-                    Configuration.UI_MODE_NIGHT_NO ->{
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
-                    Configuration.UI_MODE_NIGHT_YES ->{
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    }
-                }
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-
-
         binding.mainBottommenu.apply {
             setupWithNavController(navControl)
         }

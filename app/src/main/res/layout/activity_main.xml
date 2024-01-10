@@ -24,7 +24,6 @@
         android:id="@+id/main_bottommenu"
         android:layout_width="0dp"
         android:layout_height="55dp"
-
         android:padding="5dp"
         app:labelVisibilityMode="unlabeled"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"

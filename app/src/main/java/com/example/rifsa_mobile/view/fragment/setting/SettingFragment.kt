@@ -100,12 +100,12 @@ class SettingFragment : Fragment() {
             btnUnggahdata.setOnClickListener {
                 setUploadReminder()
             }
-            btnLanguage.setOnClickListener {
-                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-            }
-            Locale.getDefault().language.also {
-                btnLanguage.text = it
-            }
+//            btnLanguage.setOnClickListener {
+//                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+//            }
+//            Locale.getDefault().language.also {
+//                btnLanguage.text = it
+//            }
             switchTheme.apply {
                 setOnCheckedChangeListener { _, check ->
                     if(check){

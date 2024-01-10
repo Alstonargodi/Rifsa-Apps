@@ -26,7 +26,7 @@
         android:text="Theme mode"
         app:fontFamily="@font/dmsans_bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_language" />
+        app:layout_constraintTop_toBottomOf="@+id/tvlanguage" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar15"
@@ -119,7 +119,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
-        android:background="@color/white"
         android:hint="@string/kota"
         android:textSize="14sp"
         app:fontFamily="@font/dmsans_bold"
@@ -160,13 +159,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:fontFamily="@font/dmsans_bold"
         android:includeFontPadding="false"
         android:text="@string/data"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_weathersetting_cityname" />
 
@@ -176,15 +172,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:fontFamily="@font/dmsans_bold"
         android:includeFontPadding="false"
         android:text="@string/bahasa"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_unggahdata" />
+        app:layout_constraintTop_toBottomOf="@+id/textView54" />
 
     <Button
         android:id="@+id/btn_simpanlokasi"
@@ -202,30 +195,28 @@
         android:id="@+id/btn_unggahdata"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="20dp"
         android:insetTop="2dp"
         android:insetBottom="2dp"
         android:text="@string/unggah"
+        app:layout_constraintBottom_toBottomOf="@+id/textView54"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_notif_upload" />
+        app:layout_constraintStart_toEndOf="@+id/textView54"
+        app:layout_constraintTop_toTopOf="@+id/textView54" />
 
     <Button
-        android:id="@+id/btn_language"
+        android:id="@+id/btn_language2"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="95dp"
         android:layout_marginEnd="20dp"
         android:insetTop="2dp"
         android:insetBottom="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvlanguage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvlanguage" />
+        app:layout_constraintStart_toEndOf="@+id/tvlanguage"
+        app:layout_constraintTop_toTopOf="@+id/tvlanguage" />
 
     <ProgressBar
         android:id="@+id/pgbar_unggah"
@@ -238,4 +229,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.329" />
+
+    <Spinner
+        android:id="@+id/spin_languange"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="426dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
