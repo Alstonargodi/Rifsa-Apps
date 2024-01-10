@@ -32,9 +32,9 @@ class InventoryPagedAdapter:
             binding.tvcardInventTitle.text = item.name
             binding.tvcardInventAmount.text = item.amount
 
-            Glide.with(binding.root.context)
-                .load(item.imageUrl)
-                .into(binding.imgcardInvent)
+//            Glide.with(binding.root.context)
+//                .load(item.imageUrl)
+//                .into(binding.imgcardInvent)
         }
     }
 
@@ -46,7 +46,6 @@ class InventoryPagedAdapter:
         holder.binding.tvcardInventTitle.setOnClickListener {
             itemCallBack.onItemCallback(item)
         }
-        Log.d("InventoryFragment_Read",position.toString())
         holder.bind(item)
     }
 
@@ -69,7 +68,7 @@ class InventoryPagedAdapter:
             oldItem: InventoryEntity,
             newItem: InventoryEntity
         ): Boolean {
-            return oldItem === newItem
+            return oldItem.localId === newItem.localId
         }
     }
 

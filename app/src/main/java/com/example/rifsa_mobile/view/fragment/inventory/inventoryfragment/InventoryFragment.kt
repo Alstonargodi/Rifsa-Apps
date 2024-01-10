@@ -129,10 +129,10 @@ class InventoryFragment : Fragment() {
         try {
             binding.pgbInventoryBar.visibility = View.GONE
             val adapter = InventoryPagedAdapter()
-            val recyclerView = binding.recviewInventory
-            adapter.submitList(data)
+            val recyclerView = binding.recviewInvetory
+            recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            adapter.submitList(data)
 
             adapter.onItemCallBack(object : InventoryPagedAdapter.ItemDetailCallback{
                 override fun onItemCallback(data: InventoryEntity) {
