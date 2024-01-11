@@ -16,12 +16,12 @@
     <color name="main_color">#15B179</color>
 
     <!--all page-->
-    <color name="primaryBackground">#FFFFFF</color>
+    <color name="primaryBackground">#FF000000</color>
 
-    <!-- onboarding page-->
-    <color name="onboarding_primaryTextH1">#15B179</color>
+<!--    onboarding page-->
+    <color name="onboarding_primaryTextH1">#FFFFFF</color>
 
-    <!--login page-->
-    <color name="primarycolour_card">#FFFFFF</color>
+    <!--login sign up page-->
+    <color name="primarycolour_card">#151515</color>
     <color name="btn_login_colour">#15B179</color>
 </resources>

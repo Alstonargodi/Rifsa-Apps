@@ -13,6 +13,7 @@ import com.example.rifsa_mobile.model.repository.remote.FirebaseRepository
 import com.example.rifsa_mobile.model.repository.remote.WeatherRepository
 import com.example.rifsa_mobile.view.activity.authetication.login.LoginViewModel
 import com.example.rifsa_mobile.view.activity.mainactivity.MainActivityViewModel
+import com.example.rifsa_mobile.view.activity.onboarding.OnBoardingViewModel
 import com.example.rifsa_mobile.view.fragment.disease.viewmodel.DiseaseDetailViewModel
 import com.example.rifsa_mobile.view.fragment.disease.viewmodel.DiseaseViewModel
 import com.example.rifsa_mobile.view.fragment.finance.FinanceViewModel
@@ -131,6 +132,9 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(MainActivityViewModel::class.java)->{
                 MainActivityViewModel(PreferenceRespository) as T
+            }
+            modelClass.isAssignableFrom(OnBoardingViewModel::class.java)->{
+                    OnBoardingViewModel(PreferenceRespository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

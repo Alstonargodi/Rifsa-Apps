@@ -27,18 +27,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/btn_onboard_back"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="24dp"
+                android:contentDescription="@string/activity_onboarding_back"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_back"
-                app:tint="@color/black"
-                android:contentDescription="@string/activity_onboarding_back" />
+                app:srcCompat="@drawable/ic_back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -78,7 +78,6 @@
         android:fontFamily="@font/dmsans_regular"
         android:includeFontPadding="false"
         android:text="@string/activity_onboarding_skip"
-        android:textColor="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_onboarding" />

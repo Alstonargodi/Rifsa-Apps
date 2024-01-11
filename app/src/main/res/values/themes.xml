@@ -37,4 +37,8 @@
     <style name="iconNav">
         <item name="ic_maps">@drawable/ic_maps</item>
     </style>
+
+    <style name="backgroundColourBg" parent="Theme.RifsaMobile">
+        <item name="android:color">@color/primarycolour_card</item>
+    </style>
 </resources>

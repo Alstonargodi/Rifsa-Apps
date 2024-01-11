@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:id="@+id/activity_login"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="@color/primarycolour_card"
     tools:context=".view.activity.authetication.login.LoginActivity">
 
     <LinearLayout
@@ -14,25 +15,21 @@
         android:background="@color/green"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView49"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/dmsans_bold"
-            android:gravity="center"
-            android:text="Rifsa"
-            android:textColor="@color/light_gray"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/logo_rifsa_transparent_2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_layoutcorner_fill">
+            android:background="@drawable/bg_layoutcorner_fill"
+            android:backgroundTint="@color/primarycolour_card">
 
             <TextView
                 android:id="@+id/textView"
@@ -44,7 +41,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:gravity="center"
                 android:text="@string/activity_login_title"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +55,6 @@
                 android:layout_marginEnd="50dp"
                 android:fontFamily="@font/dmsans_regular"
                 android:gravity="center"
-                android:textColor="@color/gray"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +68,6 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/dmsans_bold"
                 android:text="@string/activity_login_tvemail_title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -86,7 +80,6 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/dmsans_bold"
                 android:text="@string/activity_login_tvpassword_title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_login_email" />
@@ -103,7 +96,6 @@
                 android:includeFontPadding="false"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -121,7 +113,6 @@
                 android:inputType="textPassword"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -129,14 +120,16 @@
             <Button
                 android:id="@+id/btn_login_enter"
                 android:layout_width="0dp"
-                android:layout_height="68dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
+                android:background="@color/btn_login_colour"
                 android:fontFamily="@font/dmsans_bold"
                 android:includeFontPadding="false"
                 android:text="@string/acitivity_login_btnsignin_title"
                 android:textAllCaps="false"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +138,7 @@
             <Button
                 android:id="@+id/btn_login_signup"
                 android:layout_width="0dp"
-                android:layout_height="68dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"

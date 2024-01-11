@@ -37,7 +37,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:gravity="center"
                 android:text="@string/activity_signup_title"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +52,6 @@
                 android:fontFamily="@font/dmsans_regular"
                 android:gravity="center"
                 android:text="@string/activity_signup_subtitle"
-                android:textColor="@color/gray"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +66,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:gravity="center|start"
                 android:text="@string/activity_signup_tvname_title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -82,7 +79,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:gravity="center|start"
                 android:text="@string/activity_login_tvemail_title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_signup_name" />
@@ -96,7 +92,6 @@
                 android:fontFamily="@font/dmsans_bold"
                 android:gravity="center|start"
                 android:text="@string/activity_login_tvpassword_title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_signup_email" />
@@ -116,7 +111,6 @@
                 android:inputType="textPersonName"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7"
@@ -134,7 +128,6 @@
                 android:includeFontPadding="false"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -152,7 +145,6 @@
                 android:inputType="textPassword"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -165,6 +157,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="32dp"
+                android:background="@color/btn_login_colour"
                 android:fontFamily="@font/dmsans_bold"
                 android:includeFontPadding="false"
                 android:text="@string/activity_login_btnsignup_title"
