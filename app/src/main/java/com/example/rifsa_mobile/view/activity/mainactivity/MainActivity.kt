@@ -25,19 +25,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //todo dark mode
-        window.statusBarColor = ContextCompat.getColor(this,R.color.black)
-
         binding.mainBottommenu.visibility = View.VISIBLE
         val navControl = findNavController(R.id.mainnav_framgent)
 
         viewModel.getUserThemeMode().observe(this){userDarkMode ->
             if(userDarkMode){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                //todo dark mode
                 window.statusBarColor = ContextCompat.getColor(this,R.color.black)
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                //todo dark mode
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.also { window.decorView.systemUiVisibility = it }
                 window.statusBarColor = ContextCompat.getColor(this,R.color.white)
             }
         }

@@ -31,17 +31,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <EditText
                     android:id="@+id/tv_weather_city"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="20dp"
+                    android:background="#00FFFFFF"
                     android:fontFamily="@font/dmsans_bold"
                     android:includeFontPadding="false"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_backhome"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_search_weather_city"
                     app:layout_constraintStart_toEndOf="@+id/btn_backhome"
                     app:layout_constraintTop_toTopOf="@+id/btn_backhome" />
 
@@ -55,6 +55,16 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_search_weather_city"
+                    android:layout_width="25dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/baseline_search_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_weather_city"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_weather_city" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

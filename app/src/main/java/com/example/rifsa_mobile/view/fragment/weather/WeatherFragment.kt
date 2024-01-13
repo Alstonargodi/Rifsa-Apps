@@ -41,6 +41,7 @@ class WeatherFragment : Fragment() {
                 )
             }
         }
+        //todo search weather
         return binding.root
     }
 
@@ -109,14 +110,17 @@ class WeatherFragment : Fragment() {
         val month = calendar[Calendar.MONTH]
         val day = calendar[Calendar.DAY_OF_MONTH]
 
-        binding.tvWeatherCity.text = data.name
-        binding.tvWeatherTemp.text = "$temp c"
-        binding.tvWeatherDate.text = "${day}-${month}-${year}"
-        binding.tvWeatherDesc.text = data.weather[0].description
 
-        binding.tvWeatherCloud.text = "${data.clouds.all} %"
-        binding.tvWeatherHumid.text = "${data.main.humidity} %"
-        binding.tvWeatherWind.text = "${data.wind.speed} km/h"
+        binding.apply {
+            tvWeatherCity.setHint(data.name)
+            tvWeatherTemp.text = "$temp c"
+            tvWeatherDate.text = "${day}-${month}-${year}"
+            tvWeatherDesc.text = data.weather[0].description
+
+            tvWeatherCloud.text = "${data.clouds.all} %"
+            tvWeatherHumid.text = "${data.main.humidity} %"
+            tvWeatherWind.text = "${data.wind.speed} km/h"
+        }
     }
 
 

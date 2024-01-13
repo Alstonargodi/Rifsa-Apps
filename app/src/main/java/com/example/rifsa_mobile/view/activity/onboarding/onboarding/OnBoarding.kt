@@ -34,8 +34,6 @@ class OnBoarding : AppCompatActivity() {
         showOnBoarding()
 
         //todo dark mode testing
-
-
         viewModel.getUserThemeMode().observe(this){userDarkMode ->
             if(userDarkMode){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
